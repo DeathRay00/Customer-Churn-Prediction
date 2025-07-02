@@ -31,16 +31,36 @@ def main():
     st.sidebar.title("Navigation")
     page = st.sidebar.selectbox(
         "Choose a page",
-        ["📊 Analytics Dashboard", "📈 Churn Prediction"]
+        ["Analytics Dashboard", "Churn Prediction"]
     )
     
-    if page == "📊 Analytics Dashboard":
+    if page == "Analytics Dashboard":
         show_powerbi_page()
-    elif page == "📈 Churn Prediction":
+    elif page == "Churn Prediction":
         show_prediction_page()
 
+
+def show_powerbi_page():
+    st.title("Customer Churn Analytics Dashboard")
+    st.subheader("Analytics Dashboard")
+    
+    # Paste your Power BI URL directly here
+    powerbi_url = "https://app.powerbi.com/view?r=eyJrIjoiZTdkY2ExMTYtMmFjOC00YTFhLWI5MmEtMWRmNmY1MTBmMTgyIiwidCI6IjM1MjFjMTZiLTBlYzgtNDBjMi04ZDQ2LTg1OTViZDEyNjM5MyJ9" # Replace with your actual Power BI embed URL
+    
+    if powerbi_url:
+        # Embed Power BI dashboard directly
+        st.components.v1.iframe(
+            src=powerbi_url,
+            width=1200,
+            height=740,
+            scrolling=True
+        )
+    else:
+        # Show sample dashboard when no URL is provided
+        st.info("URL INVALID")
+
 def show_prediction_page():
-    st.title("📈 Customer Churn Prediction")
+    st.title("Customer Churn Prediction")
     
     try:
         model, scaler, label_encoders, feature_columns = load_model_components()
@@ -84,7 +104,6 @@ def show_prediction_page():
             tenure = st.slider("Tenure (Months)", 1, 72, 12)
 
         
-        if st.button("🔮 Predict Churn", type="primary"):
             # Create input dataframe
             input_data = pd.DataFrame({
                 'Gender': [gender],
@@ -185,24 +204,7 @@ def show_prediction_page():
 
 
 
-def show_powerbi_page():
-    st.title("🎯Customer Churn Analytics Dashboard")
-    st.subheader("📊Analytics Dashboard")
-    
-    # Paste your Power BI URL directly here
-    powerbi_url = "https://app.powerbi.com/view?r=eyJrIjoiZTdkY2ExMTYtMmFjOC00YTFhLWI5MmEtMWRmNmY1MTBmMTgyIiwidCI6IjM1MjFjMTZiLTBlYzgtNDBjMi04ZDQ2LTg1OTViZDEyNjM5MyJ9" # Replace with your actual Power BI embed URL
-    
-    if powerbi_url:
-        # Embed Power BI dashboard directly
-        st.components.v1.iframe(
-            src=powerbi_url,
-            width=1200,
-            height=740,
-            scrolling=True
-        )
-    else:
-        # Show sample dashboard when no URL is provided
-        st.info("URL INVALID")
+
         
         
 
