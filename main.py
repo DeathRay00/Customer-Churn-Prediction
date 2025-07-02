@@ -39,26 +39,6 @@ def main():
     elif page == "Churn Prediction":
         show_prediction_page()
 
-
-def show_powerbi_page():
-    st.title("Customer Churn Analytics Dashboard")
-    st.subheader("Analytics Dashboard")
-    
-    # Paste your Power BI URL directly here
-    powerbi_url = "https://app.powerbi.com/view?r=eyJrIjoiZTdkY2ExMTYtMmFjOC00YTFhLWI5MmEtMWRmNmY1MTBmMTgyIiwidCI6IjM1MjFjMTZiLTBlYzgtNDBjMi04ZDQ2LTg1OTViZDEyNjM5MyJ9" # Replace with your actual Power BI embed URL
-    
-    if powerbi_url:
-        # Embed Power BI dashboard directly
-        st.components.v1.iframe(
-            src=powerbi_url,
-            width=1200,
-            height=740,
-            scrolling=True
-        )
-    else:
-        # Show sample dashboard when no URL is provided
-        st.info("URL INVALID")
-
 def show_prediction_page():
     st.title("Customer Churn Prediction")
     
@@ -104,6 +84,7 @@ def show_prediction_page():
             tenure = st.slider("Tenure (Months)", 1, 72, 12)
 
         
+        if st.button("Predict Churn", type="primary"):
             # Create input dataframe
             input_data = pd.DataFrame({
                 'Gender': [gender],
@@ -202,9 +183,24 @@ def show_prediction_page():
         st.error(f"Error loading model: {str(e)}")
         st.info("Please ensure the model files are available in the application directory.")
 
-
-
-
+def show_powerbi_page():
+    st.title("Customer Churn Analytics Dashboard")
+    st.subheader("Analytics Dashboard")
+    
+    # Paste your Power BI URL directly here
+    powerbi_url = "https://app.powerbi.com/view?r=eyJrIjoiZTdkY2ExMTYtMmFjOC00YTFhLWI5MmEtMWRmNmY1MTBmMTgyIiwidCI6IjM1MjFjMTZiLTBlYzgtNDBjMi04ZDQ2LTg1OTViZDEyNjM5MyJ9" # Replace with your actual Power BI embed URL
+    
+    if powerbi_url:
+        # Embed Power BI dashboard directly
+        st.components.v1.iframe(
+            src=powerbi_url,
+            width=1200,
+            height=740,
+            scrolling=True
+        )
+    else:
+        # Show sample dashboard when no URL is provided
+        st.info("URL INVALID")
         
         
 
